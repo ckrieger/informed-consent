@@ -1,0 +1,11 @@
+{
+  "name": "iot-device-simulator",
+  "private": false,
+  "version": "0.0.1",
+  "description": "Simulates data sended by IoT-devices",
+  "dependencies": {
+    "express": "3.x",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5"
+  }
+}
