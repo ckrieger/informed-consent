@@ -6,7 +6,7 @@ var app = express()
 app.use(bodyParser.json())
 
 app.post('/', function(req, res) {
-  console.log("received data: " + "deviceId: " + req.body.deviceId + "dataType: " + req.body.dataType);
+  console.log("received data: " + "deviceId: " + req.body.deviceId + " dataType: " + req.body.dataType);
   res.send('received data')
 })
 
