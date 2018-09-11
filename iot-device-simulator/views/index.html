@@ -51,8 +51,8 @@
             <button type="button" id="beanStatus">Bean Status</button>
         </div>
         <div id="refrigeratorButtons" class="input-group-lg center-block helloInput">
-            <p class="lead">Coffe Machine</p>
-            <button type="button" id="temperature">Temperature</button>
+            <p class="lead">Refirgerator</p>
+            <button type="button" id="temperature">Current Temperature</button>
         </div>
         <p id="response" class="lead text-center"></p>
 
@@ -70,7 +70,7 @@
 				  method: "POST",
 				  url: "./createData",
 				  contentType: "application/json",
-				  data: JSON.stringify({sender: 'CoffeeMachine', dataType: 'TankStatus'})
+				  data: JSON.stringify({senderId: 'CoffeeMachine', recipientId: 'MonitorService', dataType: 'TankStatus'})
 				})
             });
 
@@ -79,7 +79,7 @@
 				  method: "POST",
 				  url: "./createData",
 				  contentType: "application/json",
-				  data: JSON.stringify({sender: 'CoffeeMachine', dataType: 'BeanStatus'})
+				  data: JSON.stringify({senderId: 'CoffeeMachine', recipientId: 'MonitorService', dataType: 'BeanStatus'})
 				})
             });
 
@@ -88,7 +88,7 @@
 				  method: "POST",
 				  url: "./createData",
 				  contentType: "application/json",
-				  data: JSON.stringify({sender: 'Refrigerator', dataType: 'Temperature'})
+				  data: JSON.stringify({senderId: 'Refrigerator', recipientId: 'MonitorService', dataType: 'Temperature'})
 				})
             });
 

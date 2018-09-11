@@ -1,5 +1,5 @@
 {
-  "name": "informed-consent-gateway",
+  "name": "monitor-service",
   "main": "server.js",
   "description": "",
   "version": "0.1.1",
@@ -15,7 +15,6 @@
     "url": "https://github.com/ckrieger/informed-consent"
   },
   "dependencies": {
-    "@cloudant/cloudant": "^2.3.0",
     "body-parser": "^1.17.x",
     "cfenv": "^1.0.x",
     "dotenv": "^4.0.0",

@@ -32,7 +32,7 @@ app.post('/initDB', function(request, response) {
 })
 
 
-app.post('/', function(req, res) {
+app.get('/', function(req, res) {
   var allowedFunctions = [];
   if(!mydb) {
     response.send("No database");
@@ -52,17 +52,26 @@ app.post('/', function(req, res) {
 })
 
 app.post('/checkConsent', function(req, res) {
-  var dataType = req.body.dataType;
   var data = req.body.data;
-  mydb.find({selector:{'dataType': dataType}}, function(er, result) {
+  const query = {
+    "selector": {
+       "sender": req.body.sender,
+       "recipient": req.body.recipient,
+       "dataType":  req.body.dataType
+    }
+  }
+    
+  
+  mydb.find(query, function(er, result) {
     if (er) {
       throw er;
     }
     if(result.docs.length > 0){
-      result.docs.forEach(doc => console.log(`forward data of Type ${doc.dataType} to ${doc.recipient}`));
-      res.json(`forwarded data to ${result.docs.length} recipients`)
+      result.docs.forEach(doc => console.log(`forwarded data of Type ${doc.dataType} sended by ${req.body.sender} to ${doc.recipient}`));
+      res.json(`forwarded data of Type ${req.body.dataType} to ${req.body.recipient}`)
     } else {
-      res.json('did not forward data')
+      console.log(`did not forward data of Type ${req.body.dataType} sended by ${req.body.sender} to ${req.body.recipient}`)
+      res.json(`did not forward data of Type ${req.body.dataType} to ${req.body.recipient}`)
     }
   });
 })

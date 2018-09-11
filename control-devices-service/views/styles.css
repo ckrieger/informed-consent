@@ -1,0 +1,15 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px;
+}
+
+.helloInput {
+  width: 300px;
+}
+
+.response {
+  margin-top: 2%;
+}

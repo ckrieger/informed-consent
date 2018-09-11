@@ -15,16 +15,18 @@ app.listen(8080, function() {
 
 app.post("/createData", function (request, response){
     var dataType = request.body.dataType;
-    var sender = request.body.sender
-    sendDataToCLoudGateway(sender, dataType, 'some data value');
+    var senderId = request.body.senderId;
+    var recipientId = request.body.recipientId;
+    sendDataToCLoudGateway(senderId, recipientId, dataType, 'some data value');
 });
 
-function sendDataToCLoudGateway(deviceId, dataType, data){
+function sendDataToCLoudGateway(senderId, recipientId, dataType, data){
     var options = {
         method: 'POST',
-        uri: 'http://localhost:8888/checkConsent',
+        uri: 'https://informedconsentgateway-chatty-parrot.eu-gb.mybluemix.net/checkConsent',
         body: {
-            sender: deviceId,
+            sender: senderId,
+            recipient: recipientId,
             dataType: dataType,
             data:data
         },
@@ -38,4 +40,4 @@ function sendDataToCLoudGateway(deviceId, dataType, data){
         .catch(function (err) {
             console.log(err);
         });
-}
+  }
