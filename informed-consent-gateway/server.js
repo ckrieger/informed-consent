@@ -1,4 +1,5 @@
 var express = require("express");
+const request = require('request-promise-native')
 var app = express();
 var cfenv = require("cfenv");
 var bodyParser = require('body-parser')
@@ -68,6 +69,7 @@ app.post('/checkConsent', function(req, res) {
     }
     if(result.docs.length > 0){
       result.docs.forEach(doc => console.log(`forwarded data of Type ${doc.dataType} sended by ${req.body.sender} to ${doc.recipient}`));
+      forwardData(req.body);
       res.json(`forwarded data of Type ${req.body.dataType} to ${req.body.recipient}`)
     } else {
       console.log(`did not forward data of Type ${req.body.dataType} sended by ${req.body.sender} to ${req.body.recipient}`)
@@ -75,6 +77,28 @@ app.post('/checkConsent', function(req, res) {
     }
   });
 })
+
+function forwardData(data){
+  var recipientArray = [['MonitorService', 'https://monitorservice-fearless-koala.eu-gb.mybluemix.net'], ['ControlService', 'https://controldevices-cheerful-gnu.eu-gb.mybluemix.net'], ['EmailNotificationService', '']];
+  var recipientUrls = new Map(recipientArray);
+  var recipientUrl = recipientUrls.get(data.recipient);
+
+  var options = {
+    method: 'POST',
+    uri: recipientUrl + '/receiveData',
+    body: data,
+    json: true 
+};
+ 
+request(options)
+    .then(function (parsedBody) {
+        console.log(parsedBody);
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
+
+}
 
 // load local VCAP configuration  and service credentials
 var vcapLocal;

@@ -19,8 +19,8 @@ app.post('/remoteControlDevice', function(req, res) {
 })
 
 app.post('/receiveData', function(req, res) {
-  console.log(`received data of Type ${doc.dataType}`)
-  res.json('received data')
+  console.log(`received data of Type ${req.body.dataType}`)
+  res.json('Control device respnse: received data of Type' + req.body.dataType)
 })
 
 
@@ -39,7 +39,7 @@ function sendDataToCLoudGateway(senderId, recipientId, dataType, data, response)
    
   request(options)
       .then(function (parsedBody) {
-          console.log(parsedBody);
+          console.log('Resopnse of Gateway: ' + parsedBody);
           response.json(parsedBody)
       })
       .catch(function (err) {

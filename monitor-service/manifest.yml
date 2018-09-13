@@ -1,5 +1,5 @@
 ---
 applications:
- - name: Monitor
+ - name: MonitorService
    random-route: true
    memory: 256M
