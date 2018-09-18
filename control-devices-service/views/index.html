@@ -29,10 +29,11 @@
     <div class="container" id="container">
         <div class="input-group-lg center-block helloInput">
             <p class="lead">Control functions for Coffee Machine</p>
-            <button type="button" id="makeCoffee">Make Coffee</button>
-            <button type="button" id="switchOff">Switch off</button>
+            <button type="button" id="makeCoffee" class="btn btn-primary">Make Coffee</button>
+            <button type="button" id="switchOff" class="btn btn-primary">Switch off</button>
         </div>
-        <p id="response" class="lead response text-center"></p>
+        <p id="response"  style="margin-top: 2%"></p>
+        <div id="snackbar">Data sended to IoT-Devices-Gateway</div>
     </div>
 </body>
 
@@ -41,6 +42,11 @@
 
 
 <script>
+     function showSnackbar() {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+    }
         $('#makeCoffee').click(function(e) {
                 $.ajax({
 				  method: "POST",
@@ -48,6 +54,7 @@
 				  contentType: "application/json",
 				  data: JSON.stringify({recipientId: 'CoffeeMachine', dataType: 'MakeCoffee'})
 				}).done(function(data) {
+                    showSnackbar();
                     if(data){
                         $('#response').html('Gateway response: ' + data);
                     }
@@ -61,6 +68,7 @@
 				  contentType: "application/json",
 				  data: JSON.stringify({recipientId: 'CoffeeMachine', dataType: 'SwitchOff'})
 				}).done(function(data) {
+                    showSnackbar();
                     if(data){
                         $('#response').html('Gateway response: ' + data);
                     }

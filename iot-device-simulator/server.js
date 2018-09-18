@@ -18,6 +18,7 @@ app.post("/createData", function (request, response){
     var senderId = request.body.senderId;
     var recipientId = request.body.recipientId;
     sendDataToCLoudGateway(senderId, recipientId, dataType, 'some data value');
+    response.json('sended')
 });
 
 function sendDataToCLoudGateway(senderId, recipientId, dataType, data){

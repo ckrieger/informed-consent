@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Informed Consent Gateway</title>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/lib/jquery.i18n/jquery.i18n.js"></script>
+    <script src="js/lib/jquery.i18n/jquery.i18n.messagestore.js"></script>
+    <script src="js/lib/jquery.i18n/jquery.i18n.fallbacks.js"></script>
+    <script src="js/lib/jquery.i18n/jquery.i18n.language.js"></script>
+    <script src="js/lib/jquery.i18n/jquery.i18n.parser.js"></script>
+    <script src="js/lib/jquery.i18n/jquery.i18n.emitter.js"></script>
+    <script src="js/lib/jquery.i18n/jquery.i18n.emitter.bidi.js"></script>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <h3>Dashboard for Informed Consent Gateway</h3>
+        <h3>List of consents</h3>
+        <div class="jumbotron">
+            <div id="consent"></div>
+        </div>
+        <button id="loadConsent" type="button" class="btn btn-primary">reload</button>
+        <h3>Logs</h3>
+        <div class="jumbotron">
+            <div id="log"></div>
+        </div>
+        <button id="clearLog" type="button" class="btn btn-primary">Clear Log</button>
+    </div>
+</body>
+
+
+</html>
+
+
+<script>
+    var loadListOfConsents = function () {
+        $.ajax({
+            method: "GET",
+            url: "./consents",
+            contentType: "application/json"
+        }).done(function (data) {
+            $('#consent').empty();
+            $.each(data, function (i, val) {
+                $('#consent').append(`<p>${i + 1}. ${val}</p>`)
+            });
+        });
+    }
+
+    loadListOfConsents();
+
+    window.setInterval(function () {
+        $.ajax({
+            method: "GET",
+            url: "./log",
+            contentType: "application/json"
+        }).done(function (data) {
+            //$( "p" ).remove();
+            $('#log').empty();
+            if (data) {
+                $.each(data, function (i, val) {
+                    $('#log').append(`<p>${val}</p>`)
+                });
+            }
+        });
+
+    }, 3000);
+
+    $('#clearLog').click(function (e) {
+        $.ajax({
+            method: "POST",
+            url: "./clearLog",
+            contentType: "application/json"
+        }).done(function (data) {
+            $('#log').empty();
+        });
+    });
+    $('#loadConsent').click(function (e) {
+       loadListOfConsents()
+    });
+</script>
